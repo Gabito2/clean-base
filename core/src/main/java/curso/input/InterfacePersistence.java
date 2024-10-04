@@ -3,6 +3,8 @@ package curso.input;
 import curso.modelo.Course;
 
 public interface InterfacePersistence {
-    boolean existCourse();
+
+    boolean existCourse(String nombre);
+
     void saveCourse(Course course);
 }
