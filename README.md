@@ -22,7 +22,7 @@ _Se desea implementar un backend para un microservicio que permita registrar y c
 - No puede existir dos Cursos con el mismo nombre
 - Todos los atributos de Curso son obligatorios
 - La fecha de cierre de inscripcion del Curso no puede ser inferior a la actual
-- El level puede tomar solo los valores [Inicial, Medio, Avanzado]
+- El nivel puede tomar solo los valores [Inicial, Medio, Avanzado]
 
 #### Funcionalidad
 - Crear Curso
