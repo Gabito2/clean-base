@@ -4,7 +4,7 @@ import curso.modelo.Course;
 
 public interface InterfacePersistence {
 
-    boolean existCourse(String nombre);
+    boolean saveCourse(Course course);
 
-    void saveCourse(Course course);
+    boolean existCourse(String nombre);
 }

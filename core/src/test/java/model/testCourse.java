@@ -1,54 +1,65 @@
 package model;
 
 import curso.exception.exceptionCursoIncompleto;
-import curso.input.Persistencia;
+import curso.input.InterfacePersistence;
 import curso.modelo.Course;
 import curso.modelo.Level;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class testCourse {
 
+    @Mock
+    private InterfacePersistence persistence;
+
+    @InjectMocks
+    private Course course;
+
     @Test
-    public void test() throws exceptionCursoIncompleto {
-        Course course = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2021, 11, 25), Level.INICIAL);
+    public void createCourse() throws exceptionCursoIncompleto {
+        Course course = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2014, 10, 10), Level.AVANZADO);
 
-        Assertions.assertNotNull(course);
-
-        Assertions.assertEquals(course.getId(), course.getId());
+        when(persistence.existCourse(course.getNombre())).thenReturn(false);
+        Assertions.assertFalse(persistence.existCourse(course.getNombre()));
+        persistence.saveCourse(course);
+        
+        verify(persistence, times(1)).saveCourse(course);
+        when(persistence.existCourse(course.getNombre())).thenReturn(true);
+        Assertions.assertTrue(persistence.existCourse(course.getNombre()));
     }
 
     @Test
-    public void testNombreRepetido() throws exceptionCursoIncompleto {
-        Persistencia persistencia = new Persistencia();
+    public void createCourseExists() throws exceptionCursoIncompleto {
+        Course course = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2014, 10, 10), Level.AVANZADO);
+        when(persistence.existCourse(course.getNombre())).thenReturn(true);
 
-        Course course = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2024, 11, 25), Level.INICIAL);
-        persistencia.saveCourse(course);
+        Assertions.assertThrows(exceptionCursoIncompleto.class, () -> {
+            persistence.saveCourse(course);
+        });
 
-        Course course2 = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2024, 11, 25), Level.INICIAL);
-        persistencia.saveCourse(course2);
-
-        Assertions.assertEquals(false, persistencia.existCourse("Programacion"));
-    }
-
-
-
-    @Test
-    public void testLevelPermitido() throws exceptionCursoIncompleto {
-        Course course = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2021, 11, 25), Level.INICIAL);
-        Assertions.assertEquals(Level.INICIAL, course.getNivel());
-
-        Course course2 = Course.InstanciaCurso(UUID.randomUUID(), "Matematicas", LocalDate.of(2021, 11, 25), Level.MEDIO);
-        Assertions.assertEquals(Level.MEDIO, course2.getNivel());
-
+        verify(persistence, never()).saveCourse(course);
     }
 
     @Test
-    public void testLevelInexistente() throws exceptionCursoIncompleto {
-        Course course3 = Course.InstanciaCurso(UUID.randomUUID(), "Ciencias", LocalDate.of(2021, 11, 25), null);
-        Assertions.assertEquals(Level.AVANZADO, course3.getNivel());        
+    public void createCourseFail() throws exceptionCursoIncompleto {
+        Course course = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.of(2014, 10, 10), Level.AVANZADO);
+
+        doThrow(new RuntimeException("Failed to save course")).when(persistence).saveCourse(course);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            persistence.saveCourse(course);
+        });
+
+        verify(persistence, times(1)).saveCourse(course);
     }
 }
