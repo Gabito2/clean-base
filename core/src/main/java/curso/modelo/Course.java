@@ -30,8 +30,8 @@ public class Course {
             throw new exceptionCursoIncompleto("El nombre no puede ser nulo o estar vacio");
         if (id == null)
             throw new exceptionCursoIncompleto("El id no puede ser nulo");
-        if (fecha_cierre_inscripcion == null || fecha_cierre_inscripcion.isBefore(LocalDate.of(2010, 10, 25)))
-            throw new exceptionCursoIncompleto("Fecha nula o fecha inválida");  
+        if (fecha_cierre_inscripcion == null || fecha_cierre_inscripcion.isBefore(LocalDate.now()))
+            throw new exceptionCursoIncompleto("fecha_cierre_inscripcion no puede ser nulo");
         if (level == null)
             throw new exceptionCursoIncompleto("El nivel no puede ser nulo");
 

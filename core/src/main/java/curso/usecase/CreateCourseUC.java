@@ -6,7 +6,7 @@ import curso.modelo.Course;
 public class CreateCourseUC implements InterfaceCreateCourseUC {
     private Persistencia persistencia;
 
-    public CreateCourseUC(Persistencia persistencia, Course course) {
+    public CreateCourseUC(Persistencia persistencia) {
         this.persistencia = persistencia;
     }
 
