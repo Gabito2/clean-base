@@ -33,7 +33,7 @@ _Se desea implementar un backend para un microservicio que permita registrar y c
       "id": null,
       "nombre": "Clean Architecture",
       "fecha_cierre_inscripcion": "2023-03-01T10:00:00.000Z",
-      "nivel": "Inicial"
+      "level": "Inicial"
     }
     ```
 
@@ -56,7 +56,7 @@ Creación de infraestructura para persistir y endpoints para comunicarse con la 
 - La nomenclatura de paquetes será en minúsculas
 - La nomenclatura de clases será en UpperCamelCase
 - La nomenclatura de métodos será en lowerCamelCase
-- La organización de paquetes será por modelo->aspecto, tanto a nivel src/main como a nivel src/test. Ejemplo:
+- La organización de paquetes será por modelo->aspecto, tanto a level src/main como a level src/test. Ejemplo:
   ```
   cursos
   └─ excepciones
