@@ -18,7 +18,6 @@ public class RegistrarCourseUC implements RegistrarCourseInput {
 
     @Override
     public boolean existCourse(String nombre) {
-//        return registrarCourseOutPut.existsByName(nombre);
         return search.searchCourse().stream().anyMatch(course -> course.getNombre().equals(nombre));
     }
 
