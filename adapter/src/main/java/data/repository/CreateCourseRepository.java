@@ -20,7 +20,8 @@ public class CreateCourseRepository implements RegistrarCourseOutPut {
     @Override
     public boolean createCourse(Course course) {
         try {
-            return createCourseCRUD.save(CourseData.fromDomain(course));
+            createCourseCRUD.save(CourseData.fromDomain(course));
+            return true;
         }
         catch (Exception e){
             return false;
