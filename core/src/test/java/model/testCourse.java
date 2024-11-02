@@ -30,12 +30,12 @@ public class testCourse {
     public void testRegistrarCourse() {
         Course course1 = Course.InstanciaCurso(UUID.randomUUID(), "Programacion", LocalDate.MAX, Level.AVANZADO);
         when(registrarCourseOutPut.existsByName("Programacion")).thenReturn(false);
-        when(registrarCourseOutPut.saveCourse(course1)).thenReturn(true);
+        when(registrarCourseOutPut.createCourse(course1)).thenReturn(true);
 
         boolean savecourse = registrarCourseUC.createCourse(course1);
 
         Assertions.assertTrue(savecourse);
-        verify(registrarCourseOutPut, times(1)).saveCourse(course1);
+        verify(registrarCourseOutPut, times(1)).createCourse(course1);
     }
 
     @Test
@@ -52,12 +52,12 @@ public class testCourse {
         Course curso = Course.InstanciaCurso(UUID.randomUUID(), "fisica", LocalDate.now().plusDays(10), Level.MEDIO);
 
         when(registrarCourseOutPut.existsByName("fisica")).thenReturn(false);
-        when(registrarCourseOutPut.saveCourse(curso)).thenReturn(false);
+        when(registrarCourseOutPut.createCourse(curso)).thenReturn(false);
 
         boolean result = registrarCourseUC.createCourse(curso);
 
         Assertions.assertFalse(result);
-        verify(registrarCourseOutPut, times(1)).saveCourse(curso);
+        verify(registrarCourseOutPut, times(1)).createCourse(curso);
     }
 
 }

@@ -9,5 +9,4 @@ import java.util.UUID;
 @Repository
 public interface CreateCourseCRUD extends CrudRepository<CourseData, UUID> {
     boolean existsByName(String name);
-//    boolean save(CourseData courseData);
 }

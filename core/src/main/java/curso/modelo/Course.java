@@ -10,7 +10,7 @@ public class Course {
     private LocalDate fecha_cierre_inscripcion;
     private Level level;
 
-    public Course(UUID id, String name, LocalDate fecha_cierre_inscripcion, Level level) {
+    private Course(UUID id, String name, LocalDate fecha_cierre_inscripcion, Level level) {
         this.id = id;
         this.name = name;
         this.fecha_cierre_inscripcion = fecha_cierre_inscripcion;
@@ -35,33 +35,18 @@ public class Course {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public LocalDate getFecha_cierre_inscripcion() {
         return fecha_cierre_inscripcion;
     }
 
-    public void setFecha_cierre_inscripcion(LocalDate fecha_cierre_inscripcion) {
-        this.fecha_cierre_inscripcion = fecha_cierre_inscripcion;
-    }
-
     public Level getLevel() {
         return level;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
 
     //hacer el hashchode e equals sin el id por el test
 }

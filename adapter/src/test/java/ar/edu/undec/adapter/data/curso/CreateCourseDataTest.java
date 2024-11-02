@@ -32,7 +32,7 @@ public class CreateCourseDataTest {
     public void saveCourse_Course_Succesfull() {
         Course course = Course.InstanciaCurso(UUID.randomUUID(), "name", LocalDate.MAX, Level.AVANZADO);
         when(createCourseCRUD.save(any(CourseData.class))).thenReturn(new CourseData());
-        boolean result = createCourseRepository.saveCourse(theCourse);
+        boolean result = createCourseRepository.createCourse(course);
         Assertions.assertTrue(result);
     }
 
@@ -40,7 +40,7 @@ public class CreateCourseDataTest {
     public void saveCourse_Course_returnFalse() {
         Course course = Course.InstanciaCurso(UUID.randomUUID(), "name", LocalDate.MAX, Level.AVANZADO);
         when(createCourseCRUD.save(any(CourseData.class))).thenThrow(RuntimeException.class);
-        boolean result = createCourseRepository.saveCourse(course);
+        boolean result = createCourseRepository.createCourse(course);
         Assertions.assertFalse(result);
     }
 

@@ -22,7 +22,7 @@ public class CourseDTO {
     @JsonProperty("level")
     private Level level;
 
-    public CourseDTO() {}
+    public CourseDTO(Object o, String name, LocalDate max, Level avanzado) {}
 
     public CourseDTO(Course course) {
         this.id = course.getId();

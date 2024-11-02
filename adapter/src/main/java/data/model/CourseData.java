@@ -35,11 +35,6 @@ public class CourseData {
     public LocalDate getFecha_cierre_inscripcion() { return fecha_cierre_inscripcion; }
     public Level getLevel() { return level; }
 
-    public void setId(UUID id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setFecha_cierre_inscripcion(LocalDate fecha_cierre_inscripcion) { this.fecha_cierre_inscripcion = fecha_cierre_inscripcion; }
-    public void setLevel(Level level) { this.level = level; }
-
     public static CourseData fromDomain(Course course) {
         return new CourseData(course.getId(), course.getName(), course.getFecha_cierre_inscripcion(), course.getLevel());
     }

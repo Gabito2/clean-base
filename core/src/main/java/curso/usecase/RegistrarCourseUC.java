@@ -14,8 +14,9 @@ public class RegistrarCourseUC implements RegistrarCourseInput {
     private SearchCourseOutPut searchCourseOutPut;
     private RegistrarCourseOutPut registrarCourseOutPut;
 
-    public RegistrarCourseUC(RegistrarCourseOutPut registrarCourseOutPut) {
+    public RegistrarCourseUC(RegistrarCourseOutPut registrarCourseOutPut, SearchCourseOutPut searchCourseOutPut) {
         this.registrarCourseOutPut = registrarCourseOutPut;
+        this.searchCourseOutPut = searchCourseOutPut;
     }
 
     @Override
@@ -26,10 +27,10 @@ public class RegistrarCourseUC implements RegistrarCourseInput {
     @Override
     public boolean createCourse(UUID id, String name, LocalDate fecha_cierre_inscripcion, Level level) { //le pasamos los atributos nomas
         //creamos un nuevo curso aqui
-        Course course = new Course(UUID.randomUUID(), name, fecha_cierre_inscripcion, level);
         if (registrarCourseOutPut.existsByName(name)) {
             throw new exceptionCursoIncompleto("Error, el curso ya existe");
         }
+        Course course = Course.InstanciaCurso(UUID.randomUUID(), name, fecha_cierre_inscripcion, level);
         return registrarCourseOutPut.createCourse(course);
     }
 }

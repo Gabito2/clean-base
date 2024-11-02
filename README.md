@@ -33,7 +33,7 @@ _Se desea implementar un backend para un microservicio que permita registrar y c
       "id": null,
       "nombre": "Clean Architecture",
       "fecha_cierre_inscripcion": "2023-03-01T10:00:00.000Z",
-      "level": "Inicial"
+      "nivel": "Inicial"
     }
     ```
 
