@@ -18,19 +18,15 @@ public class CreateCourseController {
     }
 
     @PostMapping
+    @ResponseBody
     public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
         try {
-            boolean result = this.registrarCourseInput.createCourse(
-                    CourseDTO.toDomain(courseDTO)
-            );
-
-            if (result) {
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.badRequest().build();
-            }
+            return ResponseEntity.ok().body(
+                    registrarCourseInput.createCourse(
+                            courseDTO.getId(), courseDTO.getName(), courseDTO.getFecha_cierre_inscripcion(), courseDTO.getLevel()
+                    ));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

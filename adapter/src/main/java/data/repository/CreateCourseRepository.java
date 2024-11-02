@@ -1,51 +1,34 @@
 package data.repository;
 
+import curso.modelo.Course;
+import curso.output.RegistrarCourseOutPut;
 import data.dbAPI.CreateCourseCRUD;
 import data.model.CourseData;
-import org.hibernate.validator.constraints.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Repository
-@Service
-public class CreateCourseRepository {
+public class CreateCourseRepository implements RegistrarCourseOutPut {
+
+    CreateCourseCRUD createCourseCRUD;
+
     @Autowired
-    private CreateCourseCRUD createCourseCRUD;
-
-    public List<CourseData> getAllCourses() {
-        return createCourseCRUD.findAll();
+    public CreateCourseRepository(CreateCourseCRUD createCourseCRUD) {
+        this.createCourseCRUD = createCourseCRUD;
     }
 
-    public CourseData saveCourse(CourseData course) {
-        return createCourseCRUD.save(course);
+    @Override
+    public boolean createCourse(Course course) {
+        try {
+            return createCourseCRUD.save(CourseData.fromDomain(course));
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
-//    @Autowired
-//    public CreateCourseRepository(CreateCourseCRUD createCourseCRUD) {
-//        this.createCourseCRUD = createCourseCRUD;
-//    }
-
-//    public boolean existCourse(String name) {
-//        return createCourseCRUD.existsByName(name);
-//    }
-//
-//    @Override
-//    public boolean existsByName(String name) {
-//        return false;
-//    }
-//
-//    public boolean saveCourse(CourseData newCourse) {
-//        try {
-//            createCourseCRUD.saveCourse(CourseData.fromDomain(newCourse));
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
-
+    @Override
+    public boolean existsByName(String name){
+        return createCourseCRUD.existsByName(name);
+    }
 }
-

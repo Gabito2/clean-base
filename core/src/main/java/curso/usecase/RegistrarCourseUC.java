@@ -1,31 +1,36 @@
 package curso.usecase;
 
+import curso.exception.exceptionCursoIncompleto;
 import curso.input.RegistrarCourseInput;
 import curso.modelo.Course;
+import curso.modelo.Level;
 import curso.output.RegistrarCourseOutPut;
 import curso.output.SearchCourseOutPut;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 public class RegistrarCourseUC implements RegistrarCourseInput {
     private SearchCourseOutPut searchCourseOutPut;
     private RegistrarCourseOutPut registrarCourseOutPut;
 
-    public RegistrarCourseUC(RegistrarCourseOutPut registrarCourseOutPut, SearchCourseOutPut searchCourseOutPut) {
+    public RegistrarCourseUC(RegistrarCourseOutPut registrarCourseOutPut) {
         this.registrarCourseOutPut = registrarCourseOutPut;
-        this.searchCourseOutPut = searchCourseOutPut;
     }
 
     @Override
-    public boolean existCourse(String nombre) {
-//        return search.searchCourse().stream().anyMatch(course -> course.getName().equals(nombre));
-        return searchCourseOutPut.searchCourse().stream().anyMatch(course -> course.getName().equals(nombre));
+    public boolean existCourse(String name) {
+        return searchCourseOutPut.searchCourse().stream().anyMatch(course -> course.getName().equals(name));
     }
 
     @Override
-    public boolean createCourse(Course course) {
-        if (existCourse(course.getName())) {
-            throw new RuntimeException("El curso ya existe");
+    public boolean createCourse(UUID id, String name, LocalDate fecha_cierre_inscripcion, Level level) { //le pasamos los atributos nomas
+        //creamos un nuevo curso aqui
+        Course course = new Course(UUID.randomUUID(), name, fecha_cierre_inscripcion, level);
+        if (registrarCourseOutPut.existsByName(name)) {
+            throw new exceptionCursoIncompleto("Error, el curso ya existe");
         }
-        return registrarCourseOutPut.saveCourse(course);
+        return registrarCourseOutPut.createCourse(course);
     }
 }
 
